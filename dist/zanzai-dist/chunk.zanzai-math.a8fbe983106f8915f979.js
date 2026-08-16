@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkznz=self.webpackChunkznz||[]).push([[7457],{57215:(e,s,a)=>{a.r(s),a.d(s,{math:()=>d});var t=a(97344);a(6704);const d=(0,t.I)({singleDollarTextMath:!0})}}]);

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html class="react no-js" data-version-sha="165ab023b587753d636e8a4e429dad0ac3b3134f" data-version-tag="serp_20260814_164639_ET" lang="en-US">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Zanz Ai. Private AI chat. Free.</title>
+<meta content="Use ChatGPT, Claude, and other AIs, privately. Protect chats from hackers, scammers, and companies. Keep info confidential. Free. No account required." name="description"/>
+<meta content="Zanz Ai, private AI chatbot, free AI chat, anonymous AI chat, AI chat no sign up, OpenAI, Anthropic, Llama, Mistral, open source AI models, privacy focused AI, no account AI chat" name="keywords"/>
+<meta content="Zanz Ai" property="og:title"/>
+<meta content="/og-image-zanzai.png" property="og:image"/>
+<meta content="Use ChatGPT, Claude, and other AIs, privately. Protect chats from hackers, scammers, and companies. Keep info confidential. Free. No account required." property="og:description"/>
+<meta content="https://zanz.ai/" property="og:url"/>
+<meta content="Zanz Ai" property="og:site_name"/>
+<link href="favicon-96x96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="favicon.ico" rel="shortcut icon"/>
+<link href="apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="Zanz Ai" name="apple-mobile-web-app-title"/>
+<link crossorigin="use-credentials" href="site.webmanifest" rel="manifest"/>
+<link as="font" crossorigin="anonymous" href="font/ZanzSansProduct-Regular.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="anonymous" href="font/ZanzSansProduct-Medium.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="anonymous" href="font/ZanzSansProduct-Bold.woff2" rel="preload" type="font/woff2"/>
+<link as="font" crossorigin="anonymous" href="font/ZanzSansDisplay-Bold.woff2" rel="preload" type="font/woff2"/>
+<script>
+window.ZNZ = window.ZNZ || {};
+window.locale_data = window.locale_data || {};
+try {
+    beforeBody();
+} catch (error) {
+    console.error(error);
+}
+
+function beforeBody() {
+    if (/^\/share\//.test(location.pathname)) {
+        const meta = document.createElement('meta');
+        meta.name = 'robots';
+        meta.content = 'noindex, nofollow';
+        document.head.appendChild(meta);
+    }
+
+    document.documentElement?.classList.remove('no-js');
+    const osDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const native = window.__nativeStorageEntries;
+    const isDesktopElectron = window.navigator?.zanz?.platform === 'electron';
+    const stored = (native && native.setting_kae) || localStorage.setting_kae;
+    const isDark = stored === 'd' || (stored !== '-1' && osDark);
+    document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+    document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+
+    if (isDesktopElectron) {
+        document.documentElement.dataset.desktopElectron = '';
+    }
+
+    // Expose the OS so CSS can target OS-specific quirks. Match desktop
+    // Windows while excluding Windows Phone / Mobile.
+    const ua = window.navigator.userAgent;
+    const isWindows = /Windows|Win32|Win64/i.test(ua) && !/windows phone|windows mobile/i.test(ua);
+    if (isWindows) {
+        document.documentElement.dataset.os = 'windows';
+    }
+
+    try {
+        const sidebarCollapsed =
+            (native && native.zanzaiSidebarCollapsed) || localStorage.getItem('zanzaiSidebarCollapsed');
+        if (sidebarCollapsed === 'true') {
+            document.documentElement.dataset.sidebarCollapsed = '';
+        }
+    } catch (e) {}
+
+    try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('native-input') === 'true') {
+            document.documentElement.dataset.hideChatInputPlaceholder = '';
+        }
+    } catch (e) {}
+}
+
+</script>
+<style>
+/* ===== Skeleton loader =====
+ * Mirrors the React app's final geometry so the page doesn't shift on mount.
+ * All values are hardcoded because --sds-* tokens are set by JS at runtime
+ * and are NOT available at first paint.
+ */
+
+@keyframes skeleton-breath {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@font-face {
+    font-family: 'ZanzSansProduct';
+    src: url(font/ZanzSansProduct-Bold.woff2) format('woff2'),
+        url(font/ZanzSansProduct-Bold.woff) format('woff'),
+        url(font/ZanzSansProduct-Bold.ttf) format('truetype');
+    font-weight: 530 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'ZanzSansProduct';
+    src: url(font/ZanzSansProduct-Medium.woff2) format('woff2'),
+        url(font/ZanzSansProduct-Medium.woff) format('woff'),
+        url(font/ZanzSansProduct-Medium.ttf) format('truetype');
+    font-weight: 430;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'ZanzSansProduct';
+    src: url(font/ZanzSansProduct-Regular.woff2) format('woff2'),
+        url(font/ZanzSansProduct-Regular.woff) format('woff'),
+        url(font/ZanzSansProduct-Regular.ttf) format('truetype');
+    font-weight: 300 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+.loader {
+    /* -- Sidebar geometry (from sidebar.module.css) -- */
+    --sk-sidebar-width: 300px;
+    --sk-sidebar-collapsed-width: 57px;
+
+    /* -- Colors: light defaults -- */
+    --sk-bg: #ffffff; /* --ds-surface-primary light */
+    --sk-input-bg: #fafafa; /* --ds-surface-secondary light (gray-0) */
+    --sk-sidebar-border: rgba(0, 0, 0, 0.09); /* border-05 light */
+    --sk-input-border: rgba(0, 0, 0, 0.12); /* --ds-container-tertiary-border-color light */
+    --sk-sidebar-text: rgba(0, 0, 0, 0.36); /* --ds-text-secondary light */
+    --sk-sidebar-icon-bg: rgba(0, 0, 0, 0.09); /* --ds-container-secondary-border-color light */
+    --sk-action-bg: rgba(0, 0, 0, 0.06); /* button/level-1 light */
+
+    /* -- Layout -- */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    padding-right: 4px; /* --ds-space-x01: matches .zanzChatLayout padding-right */
+    box-sizing: border-box;
+    background-color: var(--sk-bg);
+    transition: opacity 0.3s ease-out;
+}
+
+.loader.loader-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Small desktop (sidebar.module.css @media --max-gutter-md) */
+@media (max-width: 1079px) {
+    .loader {
+        --sk-sidebar-width: 316px;
+    }
+}
+
+/* Dark theme (from theme-colors.ts dark mappings + color-palette.ts) */
+[data-theme='dark'] .loader {
+    --sk-bg: #161616; /* --theme-dc-color-background-dark */
+    --sk-input-bg: rgba(255, 255, 255, 0.09); /* --ds-surface-secondary dark */
+    --sk-sidebar-border: rgba(255, 255, 255, 0.12); /* border-05 dark */
+    --sk-input-border: transparent;
+    --sk-sidebar-text: rgba(255, 255, 255, 0.36); /* --ds-text-secondary dark */
+    --sk-sidebar-icon-bg: rgba(255, 255, 255, 0.12); /* --ds-container-secondary-border-color dark */
+    --sk-action-bg: rgba(255, 255, 255, 0.18); /* button/level-1 dark */
+}
+
+/* ===== Sidebar skeleton ===== */
+.sk-sidebar {
+    width: var(--sk-sidebar-width);
+    min-width: var(--sk-sidebar-width);
+    background-color: var(--sk-bg);
+    border-right: 1px solid var(--sk-sidebar-border);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px 6px 0 6px;
+}
+
+[data-sidebar-collapsed] .sk-sidebar {
+    width: var(--sk-sidebar-collapsed-width);
+    min-width: var(--sk-sidebar-collapsed-width);
+}
+ 
+/* If the search input's height changes, this value must follow it.
+ * Mirrored in sidebar.module.css → .contents .sidebarHeader + .headerSwap */
+.sk-sidebar-header {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 2px 4px 8px; /* --ds-space-x_5 right, --ds-space-x01 bottom, --ds-space-x02 left */
+    box-sizing: border-box;
+}
+
+.sk-sidebar-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--sk-sidebar-icon-bg);
+    flex-shrink: 0;
+}
+
+/* Mirrors DSText variant="body-emphasis" (--ds-font-body-md-*) plus the 2px
+ * margin-top from sidebar.module.css → .leftBlock .sidebarHeaderTitle. */
+.sk-sidebar-title {
+    font-family: 'ZanzSansProduct', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px; /* --ds-font-body-md-size */
+    line-height: 20px; /* --ds-font-body-md-line-height */
+    font-weight: 700; /* --ds-font-weight-bold */
+    letter-spacing: normal; /* --ds-font-letter-spacing-normal */
+    color: var(--sk-sidebar-text);
+    margin-top: 2px;
+    margin-left: 8px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.sk-sidebar-footer {
+    height: 80px;
+    margin-left: -6px;
+    margin-right: -6px;
+    border-top: 1px solid var(--sk-sidebar-border);
+    box-sizing: border-box;
+}
+
+/* Hide sidebar content when collapsed */
+[data-sidebar-collapsed] .sk-sidebar-header,
+[data-sidebar-collapsed] .sk-sidebar-footer {
+    display: none;
+}
+
+/* No sidebar on mobile */
+@media (max-width: 900px) {
+    .sk-sidebar {
+        display: none;
+    }
+}
+
+/* ===== Main content area (matches .chatRoot) ===== */
+.sk-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* Top toolbar spacer (top-toolbar.module.css .root.newChat = 52px) */
+.sk-toolbar {
+    height: 52px;
+    flex-shrink: 0;
+}
+
+/* Chat content area (matches .chatStackContainer, flex: 1) */
+.sk-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* Empty state spacer — reserves vertical space so the input stays positioned correctly.
+ * Contains .sk-lockup which mirrors the real Zanz Ai logo + title lockup geometry. */
+.sk-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Logo placeholder — mirrors .logo + .lockupTitle space in chat-empty-state.module.css.
+ * height(120) + margin-top(-16) + margin-bottom(24) = 128px contribution to .sk-empty-state,
+ * which matches the real lockup height (logo 120 + title 32 + title margin-top -8 = 128).
+ * If --sds-font-line-height-title-01 changes, revisit the 24px margin-bottom below.
+ * Mirrored in chat-empty-state.module.css → .logo */
+.sk-lockup {
+    width: 120px;
+    height: 120px;
+    margin-top: -16px;
+    margin-bottom: 24px;
+    border-radius: 50%;
+    background-color: var(--sk-action-bg);
+    flex-shrink: 0;
+}
+
+/* ===== Input area — matches .emptyStateContainer positioning ===== */
+.sk-input-area {
+    width: 100%;
+    padding: 0 64px; /* --ds-space-x16 = 64px (--zanzai-chat-left/right-padding desktop) */
+    box-sizing: border-box;
+}
+
+/* Desktop: spacer offsets input from top (matches emptyStateContainer layout) */
+@media (min-width: 901px) {
+    .sk-empty-state {
+        margin-top: calc(30vh - 96px); /* emptyStateContainer margin-top */
+        margin-bottom: 24px; /* --ds-space-x06 */
+        /* min-height removed — .sk-lockup now drives the intrinsic height */
+    }
+}
+
+/* Small desktop: titleContainer uses --ds-space-x09 at this breakpoint */
+@media (min-width: 901px) and (max-width: 1079px) {
+    .sk-empty-state {
+        margin-bottom: 36px;
+    }
+}
+
+/* Input container — matches .inputGroup outer box */
+.sk-input {
+    width: 100%;
+    max-width: 640px; /* --zanzai-chat-max-width-empty-state */
+    margin: 0 auto;
+    height: 100px; /* --ds-space-x10(40) + --ds-space-x15(60) = 100px */
+    display: flex;
+    padding: 12px; /* --ds-space-x03 */
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+    gap: 12px; /* --ds-space-x03 */
+    background-color: var(--sk-input-bg);
+    border: 1px solid var(--sk-input-border);
+    border-radius: 24px; /* --ds-radius-x06 */
+    box-sizing: border-box;
+}
+
+/* Top row inside input — takes remaining height */
+.sk-input-top {
+    flex: 1;
+}
+
+.sk-input-pill {
+    width: 30%;
+    height: 100%;
+    margin-top: 4px;
+    border-radius: 9999px; /* --ds-radius-full */
+    background-color: var(--sk-action-bg);
+}
+
+/* Action buttons row inside input */
+.sk-input-actions {
+    height: 32px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-self: stretch;
+}
+
+.sk-input-actions-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sk-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--sk-action-bg);
+    flex-shrink: 0;
+}
+
+/* Disclaimer spacer — reserves vertical space below the input.
+ * Matches .footerDisclaimer padding + approximate single-line text height. */
+.sk-disclaimer-spacer {
+    width: 100%;
+    max-width: 938px; /* --zanzai-chat-max-width */
+    margin: auto;
+    margin-bottom: 0;
+    padding: 8px 56px; /* --ds-space-x02(8) --ds-space-x14(56) */
+    min-height: 13px; /* ≈ one line of label text (12.3px) */
+    box-sizing: border-box;
+}
+
+/* ModeEntryPoints spacer — hidden on desktop (matches mode-entry-points.module.css .container display:none) */
+.sk-entry-points {
+    display: none;
+}
+
+/* Mobile/tablet: input centered vertically (matches emptyStateContainer flex-grow:1 + justify-content:center) */
+@media (max-width: 900px) {
+    .loader {
+        padding-right: 0; /* no layout padding-right on mobile */
+    }
+    .sk-empty-state {
+        /* flex: 1 1 auto so the lockup's intrinsic height participates in
+         * free-space distribution; the default flex: 1 (= 1 1 0%) would treat
+         * .sk-lockup as zero-basis and leave the input position unchanged. */
+        flex: 1 1 auto;
+        justify-content: flex-end; /* keep lockup close to the input during first paint */
+    }
+    .sk-lockup {
+        width: 112px;
+        height: 112px;
+    }
+    .sk-input-area {
+        max-width: 700px; /* --zanzai-chat-max-width-mobile (footer max-width) */
+        margin: 0 auto;
+        padding: 0 12px; /* --ds-space-x03 = 12px (--zanzai-chat-left/right-padding mobile) */
+    }
+    .sk-input {
+        max-width: none; /* input fills the 700px footer area, not capped at 640px */
+        min-height: 98px; /* mobile: x10(40) + x14(56) + 2px border = 98px */
+    }
+    .sk-entry-points {
+        display: block;
+        margin-top: 16px; /* --ds-space-x04 (matches ModeEntryPoints container margin-top) */
+        height: 26px;
+    }
+    .sk-disclaimer-spacer {
+        flex: 1; /* bottom spacer: balances top spacer to center the input */
+        margin: 0;
+        padding: 0;
+        min-height: 0;
+        max-width: none;
+    }
+}
+
+/* ===== Breathing animation ===== */
+.sk-sidebar-icon,
+.sk-sidebar-title,
+.sk-lockup,
+.sk-input {
+    animation: skeleton-breath 2s ease-in-out infinite;
+}
+
+/* ===== Noscript message styles ===== */
+.noscript-container {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    place-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.noscript-text {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #111;
+}
+
+/* Electron: hide sidebar header (behind window controls / traffic lights) */
+[data-desktop-electron] .sk-sidebar-header {
+    visibility: hidden;
+}
+
+/* Electron: make skeleton sidebar draggable (visibility:hidden on header blocks drag, so target parent) */
+[data-desktop-electron] .sk-sidebar {
+    -webkit-app-region: drag;
+}
+
+/* Electron: make skeleton toolbar draggable (mirrors React's electronDragRegion on top-toolbar) */
+[data-desktop-electron] .sk-toolbar {
+    -webkit-app-region: drag;
+}
+
+/* Hide the chat input skeleton when the native app provides its own input
+ * (no web form will mount). Set pre-paint by inline.js so the input area
+ * is never laid out and there's no flash. Targets .sk-input-area so the
+ * input box AND the mobile entry-points strip collapse together; the
+ * surrounding flex spacers keep the layout centered. */
+[data-hide-chat-input-placeholder] .sk-input-area {
+    display: none;
+}
+
+/* Hide loader when JS is disabled */
+.no-js .loader {
+    display: none;
+}
+
+</style>
+<link href="index.html" hreflang="af-ZA" rel="alternate"/>
+<link href="index.html" hreflang="ar-DZ" rel="alternate"/>
+<link href="index.html" hreflang="ar-EG" rel="alternate"/>
+<link href="index.html" hreflang="ar-JO" rel="alternate"/>
+<link href="index.html" hreflang="ar-SA" rel="alternate"/>
+<link href="index.html" hreflang="ast-ES" rel="alternate"/>
+<link href="index.html" hreflang="az-AZ" rel="alternate"/>
+<link href="index.html" hreflang="be-BY" rel="alternate"/>
+<link href="index.html" hreflang="bg-BG" rel="alternate"/>
+<link href="index.html" hreflang="bn-BD" rel="alternate"/>
+<link href="index.html" hreflang="bn-IN" rel="alternate"/>
+<link href="index.html" hreflang="bo-CN" rel="alternate"/>
+<link href="index.html" hreflang="br-FR" rel="alternate"/>
+<link href="index.html" hreflang="bs-BA" rel="alternate"/>
+<link href="index.html" hreflang="ca-ES" rel="alternate"/>
+<link href="index.html" hreflang="cs-CZ" rel="alternate"/>
+<link href="index.html" hreflang="cy-GB" rel="alternate"/>
+<link href="index.html" hreflang="da-DK" rel="alternate"/>
+<link href="index.html" hreflang="de-CH" rel="alternate"/>
+<link href="index.html" hreflang="de-DE" rel="alternate"/>
+<link href="index.html" hreflang="el-GR" rel="alternate"/>
+<link href="index.html" hreflang="en-AU" rel="alternate"/>
+<link href="index.html" hreflang="en-CA" rel="alternate"/>
+<link href="index.html" hreflang="en-GB" rel="alternate"/>
+<link href="index.html" hreflang="en-US" rel="alternate"/>
+<link href="index.html" hreflang="eo-XX" rel="alternate"/>
+<link href="index.html" hreflang="es-AR" rel="alternate"/>
+<link href="index.html" hreflang="es-CL" rel="alternate"/>
+<link href="index.html" hreflang="es-CO" rel="alternate"/>
+<link href="index.html" hreflang="es-CR" rel="alternate"/>
+<link href="index.html" hreflang="es-EC" rel="alternate"/>
+<link href="index.html" hreflang="es-ES" rel="alternate"/>
+<link href="index.html" hreflang="es-MX" rel="alternate"/>
+<link href="index.html" hreflang="es-PE" rel="alternate"/>
+<link href="index.html" hreflang="es-UY" rel="alternate"/>
+<link href="index.html" hreflang="es-VE" rel="alternate"/>
+<link href="index.html" hreflang="et-EE" rel="alternate"/>
+<link href="index.html" hreflang="eu-ES" rel="alternate"/>
+<link href="index.html" hreflang="fa-IR" rel="alternate"/>
+<link href="index.html" hreflang="fi-FI" rel="alternate"/>
+<link href="index.html" hreflang="fr-BE" rel="alternate"/>
+<link href="index.html" hreflang="fr-CA" rel="alternate"/>
+<link href="index.html" hreflang="fr-CH" rel="alternate"/>
+<link href="index.html" hreflang="fr-FR" rel="alternate"/>
+<link href="index.html" hreflang="ga-IE" rel="alternate"/>
+<link href="index.html" hreflang="gd-GB" rel="alternate"/>
+<link href="index.html" hreflang="gl-ES" rel="alternate"/>
+<link href="index.html" hreflang="gu-IN" rel="alternate"/>
+<link href="index.html" hreflang="he-IL" rel="alternate"/>
+<link href="index.html" hreflang="hi-IN" rel="alternate"/>
+<link href="index.html" hreflang="hr-HR" rel="alternate"/>
+<link href="index.html" hreflang="hu-HU" rel="alternate"/>
+<link href="index.html" hreflang="hy-AM" rel="alternate"/>
+<link href="index.html" hreflang="id-ID" rel="alternate"/>
+<link href="index.html" hreflang="io-XX" rel="alternate"/>
+<link href="index.html" hreflang="is-IS" rel="alternate"/>
+<link href="index.html" hreflang="it-IT" rel="alternate"/>
+<link href="index.html" hreflang="ja-JP" rel="alternate"/>
+<link href="index.html" hreflang="ka-GE" rel="alternate"/>
+<link href="index.html" hreflang="kab-DZ" rel="alternate"/>
+<link href="index.html" hreflang="kn-IN" rel="alternate"/>
+<link href="index.html" hreflang="ko-KR" rel="alternate"/>
+<link href="index.html" hreflang="ku" rel="alternate"/>
+<link href="index.html" hreflang="kw-GB" rel="alternate"/>
+<link href="index.html" hreflang="ky-KG" rel="alternate"/>
+<link href="index.html" hreflang="ln-CD" rel="alternate"/>
+<link href="index.html" hreflang="lt-LT" rel="alternate"/>
+<link href="index.html" hreflang="lv-LV" rel="alternate"/>
+<link href="index.html" hreflang="ml-IN" rel="alternate"/>
+<link href="index.html" hreflang="mn-MN" rel="alternate"/>
+<link href="index.html" hreflang="mr-IN" rel="alternate"/>
+<link href="index.html" hreflang="ms-MY" rel="alternate"/>
+<link href="index.html" hreflang="nb-NO" rel="alternate"/>
+<link href="index.html" hreflang="ne-NP" rel="alternate"/>
+<link href="index.html" hreflang="nl-BE" rel="alternate"/>
+<link href="index.html" hreflang="nl-NL" rel="alternate"/>
+<link href="index.html" hreflang="nn-NO" rel="alternate"/>
+<link href="index.html" hreflang="od-IN" rel="alternate"/>
+<link href="index.html" hreflang="pl-PL" rel="alternate"/>
+<link href="index.html" hreflang="ps-AF" rel="alternate"/>
+<link href="index.html" hreflang="pt-BR" rel="alternate"/>
+<link href="index.html" hreflang="pt-PT" rel="alternate"/>
+<link href="index.html" hreflang="ro-RO" rel="alternate"/>
+<link href="index.html" hreflang="ru-RU" rel="alternate"/>
+<link href="index.html" hreflang="sc-IT" rel="alternate"/>
+<link href="index.html" hreflang="si-LK" rel="alternate"/>
+<link href="index.html" hreflang="sk-SK" rel="alternate"/>
+<link href="index.html" hreflang="sl-SI" rel="alternate"/>
+<link href="index.html" hreflang="sq-AL" rel="alternate"/>
+<link href="index.html" hreflang="sr-RS" rel="alternate"/>
+<link href="index.html" hreflang="sv-SE" rel="alternate"/>
+<link href="index.html" hreflang="ta-IN" rel="alternate"/>
+<link href="index.html" hreflang="te-IN" rel="alternate"/>
+<link href="index.html" hreflang="th-TH" rel="alternate"/>
+<link href="index.html" hreflang="tl-PH" rel="alternate"/>
+<link href="index.html" hreflang="tokipona-XX" rel="alternate"/>
+<link href="index.html" hreflang="tpi-PG" rel="alternate"/>
+<link href="index.html" hreflang="tr-TR" rel="alternate"/>
+<link href="index.html" hreflang="uk-UA" rel="alternate"/>
+<link href="index.html" hreflang="ur-PK" rel="alternate"/>
+<link href="index.html" hreflang="vi-VN" rel="alternate"/>
+<link href="index.html" hreflang="zh-CN" rel="alternate"/>
+<link href="index.html" hreflang="zh-TW" rel="alternate"/>
+<link href="index.html" hreflang="x-default" rel="alternate"/>
+<link href="index.html" rel="canonical"/>
+<link href="dist/zanzai-dist/entry.zanzai.9d3a9b049df3692428c7.css" rel="stylesheet"/>
+</head>
+<body>
+<noscript>
+<div class="noscript-container">
+<p class="noscript-text">Zanz Ai requires JavaScript to run</p>
+<p class="noscript-text">Visit <a href="https://zanz.com">zanz.com</a></p>
+</div>
+</noscript>
+<div class="loader" id="app-loader">
+<div class="sk-sidebar">
+<div class="sk-sidebar-header">
+<div class="sk-sidebar-icon"></div>
+<span class="sk-sidebar-title">Zanz Ai</span>
+</div>
+<div class="sk-sidebar-footer"></div>
+</div>
+<div class="sk-main">
+<div class="sk-toolbar"></div>
+<div class="sk-content">
+<div class="sk-empty-state">
+<div class="sk-lockup"></div>
+</div>
+<div class="sk-input-area">
+<div class="sk-input">
+<div class="sk-input-top">
+<div class="sk-input-pill"></div>
+</div>
+<div class="sk-input-actions">
+<div class="sk-input-actions-left">
+<div class="sk-action-btn"></div>
+<div class="sk-action-btn"></div>
+</div>
+<div class="sk-action-btn"></div>
+</div>
+</div>
+<div class="sk-entry-points"></div>
+</div>
+<div class="sk-disclaimer-spacer"></div>
+</div>
+</div>
+</div>
+<div id="app"></div>
+<script src="zanz.js"></script>
+<script src="dist/zanzai-dist/lib.91d392df195d4371dfcff8dd.js"></script>
+<script src="dist/locale/en_US.999ef796435f118e1a10d890b36deea1.js"></script>
+<script src="dist/zanzai-dist/entry.vendors.ebbe7922f32fc4f30cd7.js"></script>
+<script src="dist/zanzai-dist/entry.zanzai.c9aa7366ce6832ac4077.js"></script>
+</body>
+</html>
